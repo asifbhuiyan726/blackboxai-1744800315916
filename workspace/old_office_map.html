@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Office Map | Hybrid Work System</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2E3A59;
+            --secondary: #FF6B6B;
+            --accent: #4ECDC4;
+            --bg: #F5F7FA;
+            --card-bg: #FFFFFF;
+        }
+        body {
+            font-family: 'Open Sans', sans-serif;
+            background-color: var(--bg);
+            color: var(--primary);
+            margin: 0;
+            padding: 0;
+        }
+        .workspace-container {
+            padding: 2rem;
+        }
+        .map-container {
+            position: relative;
+            height: 70vh;
+            background-color: #fff;
+            border-radius: 1rem;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+        .floor-selector {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            z-index: 100;
+        }
+        .desk {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .desk:hover {
+            transform: scale(1.1);
+        }
+        .desk.available {
+            background-color: rgba(78, 205, 196, 0.2);
+            border: 2px solid var(--accent);
+        }
+        .desk.booked {
+            background-color: rgba(255, 107, 107, 0.2);
+            border: 2px solid var(--secondary);
+        }
+        .desk.yours {
+            background-color: rgba(46, 58, 89, 0.2);
+            border: 2px solid var(--primary);
+            font-weight: bold;
+        }
+        .amenity-status {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        .status-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .quick-book-panel {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background-color: var(--card-bg);
+            padding: 1rem;
+            border-radius: 1rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            z-index: 100;
+        }
+    </style>
+</head>
+<body>
+    <div class="workspace-container">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1 class="display-5 fw-bold">
+                <i class="fas fa-map-marked-alt me-3"></i>Office Map
+            </h1>
+            <div>
+                <button class="btn btn-accent">
+                    <i class="fas fa-calendar-alt me-2"></i>View Booking History
+                </button>
+            </div>
+        </div>
+
+        <div class="map-container" id="officeMap">
+            <!-- Office map will be rendered here -->
+            <div class="floor-selector">
+                <select class="form-select">
+                    <option>Floor 1 - Reception</option>
+                    <option>Floor 2 - Engineering</option>
+                    <option selected>Floor 3 - Design & Product</option>
+                    <option>Floor 4 - Meeting Rooms</option>
+                </select>
+            </div>
+            
+            <!-- Example desks (would be generated dynamically) -->
+            <div class="desk available" style="top: 20%; left: 20%;" data-desk="3F-12">
+                <i class="fas fa-chair"></i>
+            </div>
+            <div class="desk booked" style="top: 20%; left: 30%;" data-desk="3F-13">
+                <i class="fas fa-user"></i>
+            </div>
+            <div class="desk yours" style="top: 30%; left: 20%;" data-desk="3F-22">
+                <i class="fas fa-star"></i>
+            </div>
+        </div>
+
+        <div class="amenity-status mt-3">
+            <div class="status-item">
+                <div class="desk available"></div>
+                <span>Available</span>
+            </div>
+            <div class="status-item">
+                <div class="desk booked"></div>
+                <span>Booked</span>
+            </div>
+            <div class="status-item">
+                <div class="desk yours"></div>
+                <span>Your Desk</span>
+            </div>
+        </div>
+
+        <div class="quick-book-panel">
+            <h5 class="mb-3">Quick Book</h5>
+            <div class="d-flex gap-2">
+                <button class="btn btn-sm btn-accent">
+                    <i class="fas fa-chair"></i> Same Desk
+                </button>
+                <button class="btn btn-sm btn-outline-primary">
+                    <i class="fas fa-search"></i> Find Available
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Desk selection functionality
+        document.querySelectorAll('.desk.available').forEach(desk => {
+            desk.addEventListener('click', function() {
+                const deskNumber = this.getAttribute('data-desk');
+                if (confirm(`Book desk ${deskNumber} for tomorrow?`)) {
+                    this.classList.remove('available');
+                    this.classList.add('yours');
+                    this.innerHTML = '<i class="fas fa-star"></i>';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
