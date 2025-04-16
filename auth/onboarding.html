@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Get Started | Hybrid Work System</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2E3A59;
+            --secondary: #FF6B6B;
+            --accent: #4ECDC4;
+        }
+        body {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            min-height: 100vh;
+            color: white;
+        }
+        .onboarding-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 2rem;
+        }
+        .onboarding-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 1rem;
+            width: 100%;
+            max-width: 500px;
+            padding: 2rem;
+        }
+        .onboarding-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        .onboarding-progress {
+            height: 4px;
+            background: rgba(255,255,255,0.1);
+            margin-bottom: 2rem;
+            border-radius: 2px;
+        }
+        .onboarding-progress-bar {
+            height: 100%;
+            width: 33%;
+            background: var(--accent);
+            border-radius: 2px;
+        }
+        .form-control {
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: white;
+        }
+        .form-control:focus {
+            background: rgba(255,255,255,0.2);
+            border-color: var(--accent);
+            color: white;
+            box-shadow: 0 0 0 0.25rem rgba(78, 205, 196, 0.25);
+        }
+        .work-preference {
+            cursor: pointer;
+            border: 2px solid rgba(255,255,255,0.1);
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+        }
+        .work-preference:hover, .work-preference.active {
+            border-color: var(--accent);
+            background: rgba(78, 205, 196, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="onboarding-container">
+        <div class="onboarding-card">
+            <div class="onboarding-header">
+                <i class="fas fa-laptop-house fa-3x mb-3"></i>
+                <h2 class="h3">Get Started</h2>
+                <p class="text-white-50">Create your HybridWork account in minutes</p>
+            </div>
+            
+            <div class="onboarding-progress">
+                <div class="onboarding-progress-bar"></div>
+            </div>
+            
+            <form>
+                <div class="mb-3">
+                    <label class="form-label">Work Preference</label>
+                    <div class="work-preference active">
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="workPreference" id="hybrid" checked value="hybrid">
+                            <label class="form-check-label" for="hybrid">
+                                <strong>Hybrid Work</strong>
+                                <small class="d-block text-white-50">Split time between office and remote</small>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="work-preference">
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="workPreference" id="remote" value="remote">
+                            <label class="form-check-label" for="remote">
+                                <strong>Fully Remote</strong>
+                                <small class="d-block text-white-50">Work from anywhere</small>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="work-preference">
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="workPreference" id="office" value="office">
+                            <label class="form-check-label" for="office">
+                                <strong>Office-Based</strong>
+                                <small class="d-block text-white-50">Primarily work from office</small>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="email" class="form-label">Work Email</label>
+                    <input type="email" class="form-control" id="email" placeholder="name@company.com" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="password" class="form-label">Create Password</label>
+                    <input type="password" class="form-control" id="password" placeholder="••••••••" minlength="8" required>
+                    <small class="text-white-50">Minimum 8 characters</small>
+                </div>
+
+                <div class="mb-4">
+                    <label for="company" class="form-label">Company Name</label>
+                    <input type="text" class="form-control" id="company" placeholder="Your company name" required>
+                </div>
+
+                <button type="submit" class="btn btn-accent w-100 mb-3">Create Account</button>
+                
+                <div class="text-center">
+                    <small class="text-white-50">Already have an account? <a href="login.html" class="text-accent">Sign in</a></small>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.querySelector('form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const company = document.getElementById('company').value;
+            const workPreference = document.querySelector('input[name="workPreference"]:checked').value;
+            
+            // Validation
+            if (!email || !password || !company) {
+                showAlert('Please fill in all required fields', 'danger');
+                return;
+            }
+            
+            if (!/^\S+@\S+\.\S+$/.test(email)) {
+                showAlert('Please enter a valid email address', 'danger');
+                return;
+            }
+            
+            if (password.length < 8) {
+                showAlert('Password must be at least 8 characters', 'danger');
+                return;
+            }
+            
+            // Simulate successful account creation
+            showAlert('Account created successfully!', 'success');
+            
+            // Update progress bar
+            document.querySelector('.onboarding-progress-bar').style.width = '100%';
+            
+            // Redirect after delay
+            setTimeout(() => {
+                window.location.href = '../dashboard/work_hub.html';
+            }, 2000);
+        });
+
+        function showAlert(message, type) {
+            const alertDiv = document.createElement('div');
+            alertDiv.className = `alert alert-${type} mt-3`;
+            alertDiv.textContent = message;
+            document.querySelector('form').appendChild(alertDiv);
+            
+            setTimeout(() => alertDiv.remove(), 3000);
+        }
+
+        // Work preference selection
+        document.querySelectorAll('.work-preference').forEach(pref => {
+            pref.addEventListener('click', function() {
+                document.querySelectorAll('.work-preference').forEach(p => p.classList.remove('active'));
+                this.classList.add('active');
+                this.querySelector('input').checked = true;
+            });
+        });
+    </script>
+</body>
+</html>
